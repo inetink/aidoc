@@ -1,3 +1,0 @@
-## UserId
-## GetAa
-## FuncPath
