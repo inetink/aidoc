@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type="text/xsl" href="https://apidoc.tools/v6/apidoc.xsl"?>
+<apidoc apidoc="6.1.0" created="2022-09-11T13:22:48+08:00">
+	<title></title>
+	<api method="GET" summary="获取所有的用户信息">
+		<path path="/users">
+			<query name="page" type="number" default="0"></query>
+			<query name="size" type="number" default="20"></query>
+		</path>
+		<tag>user</tag>
+		<server>users</server>
+	</api>
+</apidoc>

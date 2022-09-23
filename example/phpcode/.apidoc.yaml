@@ -1,0 +1,11 @@
+version: 6.1.0
+inputs:
+    - lang: php
+      dir: file:///Users/cjl/node_www/apidoc/example/phpcode
+      exts:
+        - .php
+      recursive: true
+output:
+    type: apidoc+xml
+    path: file:///Users/cjl/node_www/apidoc/example/phpcode/apidoc.xml
+    style: https://apidoc.tools/v6/apidoc.xsl
