@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: 'Acme project',
+  title: 'AiDoc Document',
   favicon: '/logo.png',
   logo: '/logo.png',
   outputPath: 'docs-dist',

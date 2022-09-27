@@ -51,6 +51,9 @@ program.version(pkgjson.version);
 
 if(process.argv.length <= 2){
   console.info("版本号：",pkgjson.version)
+  console.info("Usage：")
+  console.info("  apidoc -c apidoc.json")
+  console.info("  apidoc -i src -o doc")
   process.exit();
 }
 
