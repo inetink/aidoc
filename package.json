@@ -1,11 +1,11 @@
 {
-  "name": "apidoc",
-  "version": "0.52.0",
-  "description": "RESTful web API Documentation Generator",
-  "author": "Peter Rottmann <rottmann@inveris.de>",
+  "name": "aidoc",
+  "version": "0.1.0",
+  "description": "用于快速将注释直接转为文档，基于apidoc库，可参考apidoc文档使用，目前在测试，未构建专属官方文档",
+  "author": "Jim inetink@126.com",
   "license": "MIT",
   "preferGlobal": true,
-  "bin": "bin/apidoc",
+  "bin": "bin/aidoc",
   "main": "./lib/index.js",
   "homepage": "https://apidocjs.com",
   "repository": {
@@ -16,16 +16,16 @@
     "url": "https://github.com/apidoc/apidoc/issues"
   },
   "scripts": {
-    "build-example": "./bin/apidoc -v -i example/ -o /tmp/apidoc-output",
-    "build-devxample": "./bin/apidoc -v -i example/ -o /tmp/apidoc-output --debug",
-    "eslint": "./node_modules/.bin/eslint --ext js,mjs lib bin/apidoc template/src",
+    "build-example": "./bin/aidoc -v -i example/ -o /tmp/aidoc-output",
+    "build-devxample": "./bin/aidoc -v -i example/ -o /tmp/aidoc-output --debug",
+    "eslint": "./node_modules/.bin/eslint --ext js,mjs lib bin/aidoc template/src",
     "pre-commit": "npm run eslint && npm run test",
     "serve": "npm run build-example && docker run --rm --name apidoc -p 8080:80 -v /tmp/apidoc-output:/usr/share/nginx/html:ro -d nginx",
     "test": "mocha --colors --no-package --no-config 'test/**/*_test.*js'"
   },
   "keywords": [
     "api",
-    "apidoc",
+    "aidoc",
     "doc",
     "documentation",
     "rest",
