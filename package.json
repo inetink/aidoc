@@ -1,7 +1,7 @@
 {
   "name": "aidoc",
-  "version": "0.1.0",
-  "description": "用于快速将注释直接转为文档，基于apidoc库，可参考apidoc文档使用，目前在测试，未构建专属官方文档",
+  "version": "0.0.1",
+  "description": "用于快速将注释直接转为文档站点，基于apidoc库，全部支持apidoc文档使用(但未完全展示全部参数结构)，专属官方文档后续建设",
   "author": "Jim inetink@126.com",
   "license": "MIT",
   "preferGlobal": true,
@@ -10,10 +10,10 @@
   "homepage": "https://apidocjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/apidoc/apidoc.git"
+    "url": "https://github.com/inetink/aidoc.git"
   },
   "bugs": {
-    "url": "https://github.com/apidoc/apidoc/issues"
+    "url": "https://github.com/inetink/aidoc/issues"
   },
   "scripts": {
     "build-example": "./bin/aidoc -v -i example/ -o /tmp/aidoc-output",
@@ -26,6 +26,7 @@
   "keywords": [
     "api",
     "aidoc",
+    "apidoc",
     "doc",
     "documentation",
     "rest",
