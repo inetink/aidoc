@@ -7,6 +7,10 @@
   "sampleUrl": "https://apidoc.free.beeceptor.com",
   "output": "./apidoc-output",
   "input":["./"],
+  "index": {
+    "title": "My own footer title",
+    "filename": "footer.md"
+  },
   "order": [
     "User",
     "PostUser",

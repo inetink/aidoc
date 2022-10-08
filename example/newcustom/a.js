@@ -2,8 +2,8 @@
 
 /**
  * @api {get} [path] 接口标题
- * @apiGroup 你好
- * @apiName 再加个Name
+ * @apiGroup apiGroup组名2
+ * @apiName 排序测试a1
  * @apiDescription Compare version 0.3.0 with 0.2.0 and you will see the green markers with new items in version 0.3.0 and red markers with removed items since 0.2.0.
  * @apiParam {Number[2..5]} [id] Users unique ID.
  */
@@ -20,8 +20,8 @@ apiName  解析data中name: 是“方法名-同时是左侧菜单的标题，如
 
  /**
  * @api {get} [path] 接口标题2
- * @apiGroup 你好
- * @apiName 再加个Name2
+ * @apiGroup apiGroup组名
+ * @apiName 排序测试a2
  * @apiDescription Compare version 0.3.0 with 0.2.0 and you will see the green markers with new items in version 0.3.0 and red markers with removed items since 0.2.0.
  * @apiParam {Number[2..5]} [id] Users unique ID.
  */
@@ -29,8 +29,8 @@ function abc2(){}
 
  /**
  * @api {get} [path] 接口标题3
- * @apiGroup 你好
- * @apiName 再加个Name3
+ * @apiGroup apiGroup组名
+ * @apiName 排序测试a3
  * @apiDescription Compare version 0.3.0 with 0.2.0 and you will see the green markers with new items in version 0.3.0 and red markers with removed items since 0.2.0.
  * @apiParam {Number[2..5]} [id] Users unique ID.
  */
