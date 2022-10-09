@@ -2,10 +2,11 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   title: '__API_NAME__',
-  favicon: '/logo.png',
-  logo: '/logo.png',
+  favicon: './logo.png',
+  logo: './logo.png',
   outputPath: 'docs-dist',
   mode: 'site',
+  publicPath: './',
   // more config: https://d.umijs.org/config
 
 

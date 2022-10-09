@@ -1,7 +1,7 @@
 ---
-title: __API_NAME__
+title: footer.md
 hero:
-  title: __API_NAME__
+  title: footer.md
   desc: 📖 __API_DESCRIPTION__
   actions:
     - text: 快速上手

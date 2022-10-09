@@ -35,3 +35,26 @@ function abc2(){}
  * @apiParam {Number[2..5]} [id] Users unique ID.
  */
 function abc2(){}
+
+
+/**
+ * @api {Any} /module/controller/action 北包包
+ * @apiGroup 用户认证
+ * @apiName 登录认证
+ * @apiVersion 0.0.1
+ * @apiDescription 接收用户账号和密码进行登录认证，登录成功并返回access-token
+ *
+ * @apiBody {String}  [username] 用户账号/用户名
+ * @apiBody {String}  [password] 用户密码
+ *
+ * @apiSuccess {Number} code    状态码，0：请求成功
+ * @apiSuccess {String} message   提示信息
+ * @apiSuccess {Object} [data]    返回数据
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * {"code":0,"message":"","data":[]}
+ *
+ * @apiErrorExample {json} Error-Response:
+ * {"code":5001,"message":"接口异常"}
+ */
+function abc3(){}
