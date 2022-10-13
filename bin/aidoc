@@ -18,7 +18,7 @@ const path = require('path');
 const nodemon = require('nodemon');
 // library to parse arguments/options
 const { Command } = require('commander');
-
+const fs = require('fs-extra')
 const apidoc = require(path.join(__dirname, '..', 'lib', 'index'));
 
 /**
@@ -27,19 +27,19 @@ const apidoc = require(path.join(__dirname, '..', 'lib', 'index'));
  * @param {String|String[]} filters
  * @returns {Object}
  */
-function transformToObject (filters) {
-  if (!filters) { return; }
+function transformToObject(filters) {
+    if (!filters) { return; }
 
-  if (typeof filters === 'string') { filters = [filters]; }
+    if (typeof filters === 'string') { filters = [filters]; }
 
-  const result = {};
-  filters.forEach(function (filter) {
-    const splits = filter.split('=');
-    if (splits.length === 2) {
-      result[splits[0]] = path.resolve(splits[1], '');
-    }
-  });
-  return result;
+    const result = {};
+    filters.forEach(function(filter) {
+        const splits = filter.split('=');
+        if (splits.length === 2) {
+            result[splits[0]] = path.resolve(splits[1], '');
+        }
+    });
+    return result;
 }
 
 // init program
@@ -49,69 +49,69 @@ const program = new Command();
 const pkgjson = require(path.join('..', 'package.json'));
 program.version(pkgjson.version);
 
-if(process.argv.length <= 2){
-  console.info("版本号：",pkgjson.version)
-  console.info("Usage：")
-  console.info("  apidoc -c apidoc.json")
-  console.info("  apidoc -i src -o doc")
-  process.exit();
+if (process.argv.length <= 2) {
+    console.info("版本号：", pkgjson.version)
+    console.info("Usage：")
+    console.info("  apidoc -c apidoc.json")
+    console.info("  apidoc -i src -o doc")
+    process.exit();
 }
 
 program
-  // 配置文件路径
-  .option('-c, --config <config>', 'Path to config file (json or javascript).', '')
+    // 配置文件路径
+    .option('-c, --config <config>', 'Path to config file (json or javascript).', '')
 
-  .option('--no-color', 'Turn off log color.', false)
-  // 展示debug信息
-  .option('-d, --debug', 'Show debug messages.', false)
+    .option('--no-color', 'Turn off log color.', false)
+    // 展示debug信息
+    .option('-d, --debug', 'Show debug messages.', false)
 
-  .option('--definitions', 'Include definitions file rather than copying definitions.', false)
-  // 指定源文件的编码，默认utf8
-  .option('--encoding <encoding>', 'Set the encoding of the source code. [utf8].', 'utf8')
-  // 指定files/dirs（文件或目录）不要解析，当前目录下的文件或目录要使用 ./xxx，不要忘记./
-  .option('-e, --exclude-filters <exclude-filters...>', 'RegEx-Filter to select files / dirs that should not be parsed (many -e can be used).', [])
-  // 指定要解析的文件
-  .option('-f --file-filters <file-filters...>', 'RegEx-Filter to select files that should be parsed (multiple -f can be used).', [])
+    .option('--definitions', 'Include definitions file rather than copying definitions.', false)
+    // 指定源文件的编码，默认utf8
+    .option('--encoding <encoding>', 'Set the encoding of the source code. [utf8].', 'utf8')
+    // 指定files/dirs（文件或目录）不要解析，当前目录下的文件或目录要使用 ./xxx，不要忘记./
+    .option('-e, --exclude-filters <exclude-filters...>', 'RegEx-Filter to select files / dirs that should not be parsed (many -e can be used).', [])
+    // 指定要解析的文件
+    .option('-f --file-filters <file-filters...>', 'RegEx-Filter to select files that should be parsed (multiple -f can be used).', [])
 
-  .option('--filter-by <tag-filter=value>', 'Filter documentation by tag', '')
-  // 指定输入源，默认./src 目录
-  .option('-i, --input <input...>', 'Input/source dirname.', ['./src'])
+    .option('--filter-by <tag-filter=value>', 'Filter documentation by tag', '')
+    // 指定输入源，默认./src 目录
+    .option('-i, --input <input...>', 'Input/source dirname.', ['./src'])
 
-  .option('--line-ending <line-ending>', 'Turn off autodetect line-ending. Allowed values: LF, CR, CRLF.', os.EOL)
-  // 日志格式
-  .option('--log-format <format>', 'Change log format. Allowed values: simple, json.', 'simple')
-  // 用来指定解析器，用法：apidoc --markdown /path/to/a/custom_markdown_parser.js
-  .option('--markdown [markdown]', 'Turn off default markdown parser or set a file to a custom parser.', true)
+    .option('--line-ending <line-ending>', 'Turn off autodetect line-ending. Allowed values: LF, CR, CRLF.', os.EOL)
+    // 日志格式
+    .option('--log-format <format>', 'Change log format. Allowed values: simple, json.', 'simple')
+    // 用来指定解析器，用法：apidoc --markdown /path/to/a/custom_markdown_parser.js
+    .option('--markdown [markdown]', 'Turn off default markdown parser or set a file to a custom parser.', true)
 
-  // 解析源文件，但不写入任何输出文件。
-  .option('-n, --dry-run', 'Parse source files but do not write any output files.', false)
+    // 解析源文件，但不写入任何输出文件。
+    .option('-n, --dry-run', 'Parse source files but do not write any output files.', false)
 
-  .option('-o, --output <output>', 'Output dirname.', './doc/')
+    .option('-o, --output <output>', 'Output dirname.', './doc/')
 
-  .option('--parse-filters <parse-filters...>', 'Optional user defined filters. Format name=filename', [])
+    .option('--parse-filters <parse-filters...>', 'Optional user defined filters. Format name=filename', [])
 
-  .option('--parse-languages <parse-languages...>', 'Optional user defined languages. Format name=filename', [])
+    .option('--parse-languages <parse-languages...>', 'Optional user defined languages. Format name=filename', [])
 
-  .option('--parse-parsers <parse-parsers...>', 'Optional user defined parsers. Format name=filename', [])
+    .option('--parse-parsers <parse-parsers...>', 'Optional user defined parsers. Format name=filename', [])
 
-  .option('--parse-workers <parse-workers...>', 'Optional user defined workers. Format name=filename', [])
+    .option('--parse-workers <parse-workers...>', 'Optional user defined workers. Format name=filename', [])
 
-  // 设置包含私有的APIs，默认不包含
-  .option('-p, --private', 'Include private APIs in output.', false)
+    // 设置包含私有的APIs，默认不包含
+    .option('-p, --private', 'Include private APIs in output.', false)
 
-  .option('-q, --quiet', 'Turn all output off.', false)
+    .option('-q, --quiet', 'Turn all output off.', false)
 
-  .option('-S, --single', 'Output to single file.', false)
-  // 指定模版目录
-  .option('-t, --template <template>', 'Use template for output files.', path.join(__dirname, '../template/'))
-  // 详细输出
-  .option('-v, --verbose', 'Verbose output.', false)
-  // 警告或错误日志
-  .option('--warn-error', 'Treat warnings as error and exit with error code.', false)
-  // 启动自动监控源文件变动，并重新编译文档
-  .option('-w, --watch', 'Watch input files for changes to rebuild the docs.', false)
+    .option('-S, --single', 'Output to single file.', false)
+    // 指定模版目录
+    .option('-t, --template <template>', 'Use template for output files.', path.join(__dirname, '../template/'))
+    // 详细输出
+    .option('-v, --verbose', 'Verbose output.', false)
+    // 警告或错误日志
+    .option('--warn-error', 'Treat warnings as error and exit with error code.', false)
+    // 启动自动监控源文件变动，并重新编译文档
+    .option('-w, --watch', 'Watch input files for changes to rebuild the docs.', false)
 
-  .parse(process.argv);
+    .parse(process.argv);
 
 const argv = program.opts();
 
@@ -119,40 +119,41 @@ const argv = program.opts();
 const defaultIncludeFilters = ['.*\\.(clj|cls|coffee|cpp|cs|dart|erl|exs?|go|groovy|ino?|java|js|jsx|kt|litcoffee|lua|mjs|p|php?|pl|pm|py|rb|scala|ts|vue)$'];
 
 const options = {
-  excludeFilters: ['apidoc.config.js', 'node_modules'].concat(argv.excludeFilters.length ? argv.excludeFilters : [argv.output]),
-  includeFilters: argv.fileFilters.length ? argv.fileFilters : defaultIncludeFilters,
-  src: argv.input,
-  dest: argv.output,
-  template: argv.template,
-  config: argv.config,
-  apiprivate: argv.private,
-  verbose: argv.verbose,
-  single: argv.single,
-  debug: argv.debug,
-  colorize: argv.color,
-  filters: transformToObject(argv.parseFilters),
-  languages: transformToObject(argv.parseLanguages),
-  parsers: transformToObject(argv.parseParsers),
-  workers: transformToObject(argv.parseWorkers),
-  silent: argv.quiet,
-  dryRun: argv.dryRun,
-  markdown: argv.markdown,
-  lineEnding: argv.lineEnding,
-  encoding: argv.encoding,
-  copyDefinitions: !argv.definitions,
-  filterBy: argv.filterBy,
-  logFormat: argv.logFormat,
-  warnError: argv.warnError,
+    excludeFilters: ['apidoc.config.js', 'node_modules', '.umi', '.umi-production'].concat(argv.excludeFilters.length ? argv.excludeFilters : [argv.output]),
+    includeFilters: argv.fileFilters.length ? argv.fileFilters : defaultIncludeFilters,
+    src: argv.input,
+    dest: argv.output,
+    template: argv.template,
+    config: argv.config,
+    apiprivate: argv.private,
+    verbose: argv.verbose,
+    single: argv.single,
+    debug: argv.debug,
+    colorize: argv.color,
+    filters: transformToObject(argv.parseFilters),
+    languages: transformToObject(argv.parseLanguages),
+    parsers: transformToObject(argv.parseParsers),
+    workers: transformToObject(argv.parseWorkers),
+    silent: argv.quiet,
+    dryRun: argv.dryRun,
+    markdown: argv.markdown,
+    lineEnding: argv.lineEnding,
+    encoding: argv.encoding,
+    copyDefinitions: !argv.definitions,
+    filterBy: argv.filterBy,
+    logFormat: argv.logFormat,
+    warnError: argv.warnError,
+    dumi: argv.watch,
 };
 
 if (options.debug) {
-  console.debug('[debug] Parsed options:\n');
-  console.debug(options);
+    console.debug('[debug] Parsed options:\n');
+    console.debug(options);
 }
 
 // display ascii art in verbose mode (but not for json format)
 if (options.verbose && options.logFormat === 'simple') {
-  const asciiArt = `
+    const asciiArt = `
               _     _
    __ _ _ __ (_) __| | ___   ___
   / _' | '_ \\| |/ _' |/ _ \\ / __|
@@ -160,26 +161,99 @@ if (options.verbose && options.logFormat === 'simple') {
   \\__,_| .__/|_|\\__,_|\\___/ \\___|
        |_|                v${pkgjson.version}
    `;
-  console.info(asciiArt);
+    console.info(asciiArt);
 }
+
+function removeDirOrFile(p) {
+    if (fs.existsSync(p)) {
+        if (fs.statSync(p).isDirectory()) {
+            let f = fs.readdirSync(p);
+            for (var i = 0; i < f.length; i++) {
+                let tmp = path.join(p, f[i]);
+                if (fs.statSync(tmp).isDirectory()) {
+                    removeDirOrFile(tmp);
+                } else {
+                    fs.unlinkSync(tmp);
+                }
+            }
+            fs.rmdirSync(p);
+        } else {
+            fs.unlinkSync(p);
+        }
+    }
+}
+const cwd = process.cwd();
+const cacheMd = path.resolve(path.join(__dirname, '..', 'template_dumi/docs'));
+if (fs.existsSync(cacheMd)) {
+    removeDirOrFile(cacheMd)
+}
+let dumiCnf = {
+    mode: 'site',
+    publicPath: './',
+    resolve: {}
+}
+let imageData = fs.readFileSync(path.join(__dirname, '..', 'public/logo.png'));
+let bufferData = Buffer.from(imageData).toString("base64");
+let base64 = "data:image/png;base64," + bufferData;
+
+// console.log(buffer);
+let cnf = require(argv.config || path.join(cwd, "./apidoc.json") || path.resolve(path.join(__dirname, '..', 'package.json')));
+cnf.dumi = Object.assign({
+    title: "name" in cnf ? cnf.name : "Aidoc",
+    logo: "logo" in cnf ? cnf.logo : base64,
+    favicon: "logo" in cnf ? cnf.logo : base64,
+    outputPath: "output" in cnf ? cnf.output : "./aidocs",
+}, "dumi" in cnf ? cnf.dumi : {})
+cnf = Object.assign(dumiCnf, cnf.dumi);
+cnf.resolve.includes = [cacheMd]
+
+fs.writeFileSync(path.join(cwd, ".umirc.ts"), "import { defineConfig } from 'dumi';export default defineConfig(" + JSON.stringify(cnf) + ");");
+
 
 // Watch mode (-w/--watch)
 if (argv.watch) {
-  nodemon({ watch: options.src });
-  console.info('Watch mode enabled\nListening for changes on input files...');
-  nodemon.on('quit', function () {
-    console.info('\nProcess terminated.');
-    process.exit();
-  }).on('restart', function () {
-    console.info('Changes detected, rebuilding...');
-    apidoc.createDoc(options);
-    const d = new Date();
-    console.info(`Build finished at ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`);
-  });
+    // nodemon({ watch: options.src, run: true, });
+    var modemonConfig = {
+        script: "./apidoc.json",
+        ext: 'js ts php java py'
+    };
+    nodemon(modemonConfig);
+    console.info('Watch mode enabled\nListening for changes on input files...');
+    try {
+
+
+        (async function() {
+            require(path.join(__dirname, '..', 'lib', 'watch'))();
+        })();
+
+        nodemon
+            .on('quit', function() {
+                console.info('\nProcess terminated.');
+                if (fs.existsSync(path.join(cwd, ".umirc.ts"))) {
+                    fs.unlinkSync(path.join(cwd, ".umirc.ts"))
+                }
+                if (fs.existsSync(path.join(cwd, ".umi"))) {
+                    removeDirOrFile(path.join(cwd, ".umi"))
+                }
+                process.exit();
+            }).on('restart', function(files) {
+                console.info('Changes detected, rebuilding...', files);
+                apidoc.createDoc(options);
+                const d = new Date();
+                console.info(`Build finished at ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`);
+            })
+
+    } catch (e) { console.log(e) }
+
 }
+
 
 // Create documentation
 if (apidoc.createDoc(options) === false) {
-  console.error('[error] apidoc encountered an error during documentation generation!');
-  process.exit(1);
+    console.error('[error] apidoc encountered an error during documentation generation!');
+    process.exit(1);
+}
+
+if (!argv.watch) {
+    require(path.join(__dirname, '..', 'lib', 'watch'))('build');
 }

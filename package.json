@@ -21,7 +21,8 @@
     "eslint": "./node_modules/.bin/eslint --ext js,mjs lib bin/aidoc template/src",
     "pre-commit": "npm run eslint && npm run test",
     "serve": "npm run build-example && docker run --rm --name apidoc -p 8080:80 -v /tmp/apidoc-output:/usr/share/nginx/html:ro -d nginx",
-    "test": "mocha --colors --no-package --no-config 'test/**/*_test.*js'"
+    "test": "mocha --colors --no-package --no-config 'test/**/*_test.*js'",
+    "start": "dumi dev"
   },
   "keywords": [
     "api",
@@ -56,13 +57,14 @@
     "klaw-sync": "^6.0.0",
     "lodash": "^4.17.21",
     "markdown-it": "^12.2.0",
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.20",
     "prismjs": "^1.25.0",
     "semver": "^7.3.5",
     "style-loader": "^3.3.1",
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "react": "^16.12.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.177",
@@ -74,6 +76,13 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.1",
-    "mocha": "^9.1.3"
+    "mocha": "^9.1.3",
+    "@umijs/test": "^3.0.5",
+    "dumi": "^1.0.14",
+    "father-build": "^1.17.2",
+    "gh-pages": "^3.0.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^2.2.1",
+    "yorkie": "^2.0.0"
   }
 }
