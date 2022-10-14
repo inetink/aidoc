@@ -1,6 +1,6 @@
 {
   "name": "aidoc",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "用于快速将注释直接转为文档站点，基于apidoc库，全部支持apidoc文档使用(但未完全展示全部参数结构)，专属官方文档后续建设。",
   "author": "Jim inetink@126.com",
   "license": "MIT",

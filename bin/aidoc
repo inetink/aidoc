@@ -114,9 +114,10 @@ program
     .parse(process.argv);
 
 const argv = program.opts();
-
+const cwd = process.cwd();
 
 const defaultIncludeFilters = ['.*\\.(clj|cls|coffee|cpp|cs|dart|erl|exs?|go|groovy|ino?|java|js|jsx|kt|litcoffee|lua|mjs|p|php?|pl|pm|py|rb|scala|ts|vue)$'];
+
 
 const options = {
     excludeFilters: ['apidoc.config.js', 'node_modules', '.umi', '.umi-production'].concat(argv.excludeFilters.length ? argv.excludeFilters : [argv.output]),
@@ -182,15 +183,22 @@ function removeDirOrFile(p) {
         }
     }
 }
-const cwd = process.cwd();
+
 const cacheMd = path.resolve(path.join(__dirname, '..', 'template_dumi/docs'));
 if (fs.existsSync(cacheMd)) {
+    if (options.debug) {
+        console.debug('清理启动缓存');
+    }
     removeDirOrFile(cacheMd)
 }
 let dumiCnf = {
     mode: 'site',
     publicPath: './',
-    resolve: {}
+    resolve: {},
+  //   nodeModulesTransform: {
+  //   type: 'none',
+  //   exclude: [],
+  // },
 }
 let imageData = fs.readFileSync(path.join(__dirname, '..', 'public/logo.png'));
 let bufferData = Buffer.from(imageData).toString("base64");
